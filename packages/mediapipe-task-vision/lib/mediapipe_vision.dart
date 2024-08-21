@@ -6,5 +6,5 @@
 library mediapipe_vision;
 
 export 'universal_mediapipe_vision.dart'
-    if (dart.library.html) 'src/web/mediapipe_vision.dart'
-    if (dart.library.io) 'src/io/mediapipe_vision.dart';
+    if (dart.library.html) 'src/web/pose_landmarker.dart'
+    if (dart.library.io) 'src/io/pose_landmarker.dart';

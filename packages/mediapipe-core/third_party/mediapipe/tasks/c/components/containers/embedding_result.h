@@ -23,55 +23,55 @@ limitations under the License.
 extern "C" {
 #endif
 
-  // Embedding result for a given embedder head.
+// Embedding result for a given embedder head.
+//
+// One and only one of the two 'float_embedding' and 'quantized_embedding' will
+// contain data, based on whether or not the embedder was configured to perform
+// scalar quantization.
+struct Embedding {
+  // Floating-point embedding. `nullptr` if the embedder was configured to
+  // perform scalar-quantization.
+  float* float_embedding;
+
+  // Scalar-quantized embedding. `nullptr` if the embedder was not configured to
+  // perform scalar quantization.
+  char* quantized_embedding;
+
+  // Keep the count of embedding values.
+  uint32_t values_count;
+
+  // The index of the embedder head (i.e. output tensor) this embedding comes
+  // from. This is useful for multi-head models.
+  int head_index;
+
+  // The optional name of the embedder head, as provided in the TFLite Model
+  // Metadata [1] if present. This is useful for multi-head models.
+  // Defaults to nullptr.
   //
-  // One and only one of the two 'float_embedding' and 'quantized_embedding' will
-  // contain data, based on whether or not the embedder was configured to perform
-  // scalar quantization.
-  struct Embedding {
-    // Floating-point embedding. `nullptr` if the embedder was configured to
-    // perform scalar-quantization.
-    float *float_embedding;
+  // [1]: https://www.tensorflow.org/lite/convert/metadata
+  char* head_name;
+};
 
-    // Scalar-quantized embedding. `nullptr` if the embedder was not configured to
-    // perform scalar quantization.
-    char *quantized_embedding;
+// Defines embedding results of a model.
+struct EmbeddingResult {
+  // The embedding results for each head of the model.
+  struct Embedding* embeddings;
 
-    // Keep the count of embedding values.
-    uint32_t values_count;
+  // Keep the count of embeddings.
+  uint32_t embeddings_count;
 
-    // The index of the embedder head (i.e. output tensor) this embedding comes
-    // from. This is useful for multi-head models.
-    int head_index;
+  // The optional timestamp (in milliseconds) of the start of the chunk of data
+  // corresponding to these results.
+  //
+  // This is only used for embedding extraction on time series (e.g. audio
+  // embedding). In these use cases, the amount of data to process might
+  // exceed the maximum size that the model can process: to solve this, the
+  // input data is split into multiple chunks starting at different timestamps.
+  int64_t timestamp_ms;
 
-    // The optional name of the embedder head, as provided in the TFLite Model
-    // Metadata [1] if present. This is useful for multi-head models.
-    // Defaults to nullptr.
-    //
-    // [1]: https://www.tensorflow.org/lite/convert/metadata
-    char *head_name;
-  };
-
-  // Defines embedding results of a model.
-  struct EmbeddingResult {
-    // The embedding results for each head of the model.
-    struct Embedding *embeddings;
-
-    // Keep the count of embeddings.
-    uint32_t embeddings_count;
-
-    // The optional timestamp (in milliseconds) of the start of the chunk of data
-    // corresponding to these results.
-    //
-    // This is only used for embedding extraction on time series (e.g. audio
-    // embedding). In these use cases, the amount of data to process might
-    // exceed the maximum size that the model can process: to solve this, the
-    // input data is split into multiple chunks starting at different timestamps.
-    int64_t timestamp_ms;
-
-    // Specifies whether the timestamp contains a valid value.
-    bool has_timestamp_ms;
-  };
+  // Specifies whether the timestamp contains a valid value.
+  bool has_timestamp_ms;
+};
 
 #ifdef __cplusplus
 }  // extern C

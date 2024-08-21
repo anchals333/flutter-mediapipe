@@ -25,6 +25,7 @@ analyze:
 	cd packages/mediapipe-core && dart format -o write .
 	cd packages/mediapipe-task-text && dart format -o write .
 	cd packages/mediapipe-task-genai && dart format -o write .
+	cd packages/mediapipe-task-vision && dart format -o write .
 
 # Core ---
 
@@ -65,6 +66,10 @@ text: get_text generate_text test_text
 # GenAI ---
 generate_genai:
 	cd packages/mediapipe-task-genai && dart --enable-experiment=native-assets run ffigen --config=ffigen.yaml
+
+# Vision ---
+generate_vision:
+	cd packages/mediapipe-task-vision && dart --enable-experiment=native-assets run ffigen --config=ffigen.yaml
 
 # Example genai invocation.
 # Note that `GEMMA_4B_CPU_URI` can either be a local path or web URL. Similar values exist for

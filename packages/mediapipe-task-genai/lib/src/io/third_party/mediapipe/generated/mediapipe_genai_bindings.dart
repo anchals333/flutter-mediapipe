@@ -19,49 +19,44 @@ limitations under the License.
 // ignore_for_file: type=lint
 import 'dart:ffi' as ffi;
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<LlmResponseContext>)>(
-    symbol: 'LlmInferenceEngine_CloseResponseContext')
+@ffi.Native<ffi.Void Function(ffi.Pointer<LlmResponseContext>)>()
 external void LlmInferenceEngine_CloseResponseContext(
   ffi.Pointer<LlmResponseContext> response_context,
 );
 
 @ffi.Native<
-        ffi.Int Function(
-            ffi.Pointer<LlmSessionConfig>,
-            ffi.Pointer<ffi.Pointer<LlmInferenceEngine_Session>>,
-            ffi.Pointer<ffi.Pointer<ffi.Char>>)>(
-    symbol: 'LlmInferenceEngine_CreateSession')
+    ffi.Int Function(
+        ffi.Pointer<LlmSessionConfig>,
+        ffi.Pointer<ffi.Pointer<LlmInferenceEngine_Session>>,
+        ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
 external int LlmInferenceEngine_CreateSession(
   ffi.Pointer<LlmSessionConfig> session_config,
   ffi.Pointer<ffi.Pointer<LlmInferenceEngine_Session>> session_out,
   ffi.Pointer<ffi.Pointer<ffi.Char>> error_msg,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<LlmInferenceEngine_Session>)>(
-    symbol: 'LlmInferenceEngine_Session_Delete')
+@ffi.Native<ffi.Void Function(ffi.Pointer<LlmInferenceEngine_Session>)>()
 external void LlmInferenceEngine_Session_Delete(
   ffi.Pointer<LlmInferenceEngine_Session> session,
 );
 
 @ffi.Native<
-        LlmResponseContext Function(
-            ffi.Pointer<LlmInferenceEngine_Session>, ffi.Pointer<ffi.Char>)>(
-    symbol: 'LlmInferenceEngine_Session_PredictSync')
+    LlmResponseContext Function(
+        ffi.Pointer<LlmInferenceEngine_Session>, ffi.Pointer<ffi.Char>)>()
 external LlmResponseContext LlmInferenceEngine_Session_PredictSync(
   ffi.Pointer<LlmInferenceEngine_Session> session,
   ffi.Pointer<ffi.Char> input,
 );
 
 @ffi.Native<
-        ffi.Void Function(
-            ffi.Pointer<LlmInferenceEngine_Session>,
-            ffi.Pointer<ffi.Void>,
-            ffi.Pointer<ffi.Char>,
-            ffi.Pointer<
-                ffi.NativeFunction<
-                    ffi.Void Function(ffi.Pointer<ffi.Void> callback_context,
-                        ffi.Pointer<LlmResponseContext> response_context)>>)>(
-    symbol: 'LlmInferenceEngine_Session_PredictAsync')
+    ffi.Void Function(
+        ffi.Pointer<LlmInferenceEngine_Session>,
+        ffi.Pointer<ffi.Void>,
+        ffi.Pointer<ffi.Char>,
+        ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Void Function(ffi.Pointer<ffi.Void> callback_context,
+                    ffi.Pointer<LlmResponseContext> response_context)>>)>()
 external void LlmInferenceEngine_Session_PredictAsync(
   ffi.Pointer<LlmInferenceEngine_Session> session,
   ffi.Pointer<ffi.Void> callback_context,
@@ -74,9 +69,8 @@ external void LlmInferenceEngine_Session_PredictAsync(
 );
 
 @ffi.Native<
-        ffi.Int Function(ffi.Pointer<LlmInferenceEngine_Session>,
-            ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>(
-    symbol: 'LlmInferenceEngine_Session_SizeInTokens')
+    ffi.Int Function(ffi.Pointer<LlmInferenceEngine_Session>,
+        ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Pointer<ffi.Char>>)>()
 external int LlmInferenceEngine_Session_SizeInTokens(
   ffi.Pointer<LlmInferenceEngine_Session> session,
   ffi.Pointer<ffi.Char> input,
@@ -215,6 +209,7 @@ final class LlmResponseContext extends ffi.Struct {
 }
 
 typedef LlmInferenceEngine_Session = ffi.Void;
+typedef DartLlmInferenceEngine_Session = void;
 
 const int true1 = 1;
 
